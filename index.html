@@ -1644,19 +1644,26 @@
     </div>
 
     <script>
-        // ==================== CONFIGURATION ====================
-        // TODO: Replace with your Supabase credentials
-        const SUPABASE_URL = 'https://bwujbngwxjwizxjskcal.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_eX5ei8w6RH_qYarAZPoBkQ_cTBR29yq';
-        const WHATSAPP_NUMBER = '9002031631'; // e.g., +919876543210
-
-        // Initialize Supabase client
-        let supabase;
+        // Configuration
+    const SUPABASE_URL = 'https://bwujbngwxjwizxjskcal.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_eX5ei8w6RH_qYarAZPoBkQ_cTBR29yq';
+    
+    // Global variable for Supabase
+    window.appSupabase = window.appSupabase || null;
+    
+    // Initialize Supabase
+    if (!window.appSupabase) {
         try {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            window.appSupabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('Supabase initialized');
         } catch (error) {
-            console.error('Supabase initialization error:', error);
+            console.error('Supabase initialization failed:', error);
         }
+    }
+    
+    // Make it available globally
+    window.supabase = window.appSupabase;
+})();
 
         // ==================== STATE MANAGEMENT ====================
         let currentUser = null;
@@ -2234,5 +2241,6 @@
         }
     </script>
 </body>
+
 
 </html>
